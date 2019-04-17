@@ -11,7 +11,7 @@ app = Flask(__name__)
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = '0000'
+app.config['MYSQL_PASSWORD'] = 'straw'
 app.config['MYSQL_DB'] = 'gym'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
@@ -120,8 +120,8 @@ def update_password(username):
 		cur = mysql.connection.cursor()
 		cur.execute("SELECT password FROM info WHERE username = %s", [username])
 		old = (cur.fetchone())['password']
-		if sha256_crypt.verify(entered, old):
-			cur.execute("UPDATE info SET password = %s WHERE username = %s", (sha256_crypt.encrypt(new), username))
+		if old==entered:
+			cur.execute("UPDATE info SET password = %s WHERE username = %s", (new, username))
 			mysql.connection.commit()
 			cur.close()
 			flash('New password will be in effect from next login!!', 'info')
