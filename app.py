@@ -11,7 +11,7 @@ app = Flask(__name__)
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = '0000'#replace with your mysql password
+app.config['MYSQL_PASSWORD'] = 'straw'#replace with your mysql password
 app.config['MYSQL_DB'] = 'gym'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
@@ -665,13 +665,13 @@ def edit_profile(username):
 		street = request.form['street']
 		city = request.form['city']
 		phone = request.form['phone']
-		app.logger.users(name)
-		app.logger.users(street)
-		app.logger.users(city)
+		#app.logger.users(name)
+		#app.logger.users(street)
+		#app.logger.users(city)
 		cur = mysql.connection.cursor()
 
 		q = cur.execute("UPDATE users SET name = %s, street = %s, city = %s, phone = %s WHERE username = %s", (name, street, city, phone, username))
-		app.logger.users(q)
+		#app.logger.user(q)
 		mysql.connection.commit()
 		cur.close()
 		flash('You successfully updated your profile!!', 'success')
