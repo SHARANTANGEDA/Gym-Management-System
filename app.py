@@ -124,7 +124,7 @@ def update_password(username):
 			cur.execute("UPDATE users SET password = %s WHERE username = %s", (new, username))
 			mysql.connection.commit()
 			cur.close()
-			flash('New password will be in effect from next login!!', 'users')
+			flash('New password will be in effect from next login!!', 'success')
 			return redirect('/') #url_for('memberDash', username = session['username'])
 		cur.close()
 		flash('Old password you entered is wrong!!, try again', 'warning')
@@ -359,7 +359,8 @@ def removeEquip():
 			flash('You successfully removed some of your equipment!!', 'success')
 			return redirect(url_for('adminDash'))
 		else:
-			flash('you must enter valid number', 'danger')
+			num = data['count']
+			flash('you must enter valid number Available:'+str(num), 'danger')
 	return render_template('removeEquip.html', form = form)
 
 choices2 = []
@@ -542,7 +543,7 @@ def trainorDash():
 		mysql.connection.commit()
 		cur.close()
 		choices.clear()
-		flash('Progress updated and Reported', 'users')
+		flash('Progress updated and Reported', 'success')
 		return redirect(url_for('trainorDash'))
 
 	return render_template('trainorDash.html', equips = equips, form = form, members = members_under)
