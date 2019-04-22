@@ -125,7 +125,7 @@ def update_password(username):
 			mysql.connection.commit()
 			cur.close()
 			flash('New password will be in effect from next login!!', 'users')
-			return redirect(url_for('memberDash', username = session['username']))
+			return redirect('/') #url_for('memberDash', username = session['username'])
 		cur.close()
 		flash('Old password you entered is wrong!!, try again', 'warning')
 	return render_template('updatePassword.html', form = form)
@@ -346,7 +346,7 @@ def removeEquip():
 	if request.method == 'POST' and form.validate():
 		cur.execute("SELECT * FROM equip WHERE name = %s", [form.name.data])
 		data = cur.fetchone()
-		app.logger.users(data['count'])
+		# app.logger.users(data['count'])
 		num = data['count']
 		if num >= form.count.data and form.count.data>0:
 			name = form.name.data
