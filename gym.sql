@@ -2,23 +2,23 @@ CREATE DATABASE gym;
 
 USE gym;
 
-CREATE TABLE admins(username VARCHAR(200), password VARCHAR(500), name VARCHAR(100), prof INT, street VARCHAR(100), city VARCHAR(50), phone VARCHAR(32), PRIMARY KEY(username));
+CREATE TABLE info(username VARCHAR(200), password VARCHAR(500), name VARCHAR(100), prof INT, street VARCHAR(100), city VARCHAR(50), phone VARCHAR(32), PRIMARY KEY(username));
 
 CREATE TABLE plans(name VARCHAR(100),exercise VARCHAR(20),sets int,reps int, PRIMARY KEY(name));
 
-CREATE TABLE receps(username VARCHAR(200), PRIMARY KEY(username), FOREIGN KEY(username) references admins(username));
+CREATE TABLE receps(username VARCHAR(200), PRIMARY KEY(username), FOREIGN KEY(username) references info(username));
 
-CREATE TABLE trainors(username VARCHAR(200), PRIMARY KEY(username), FOREIGN KEY(username) references admins(username));
+CREATE TABLE trainors(username VARCHAR(200), PRIMARY KEY(username), FOREIGN KEY(username) references info(username));
 
-CREATE TABLE members(username VARCHAR(200), plan VARCHAR(100), trainor VARCHAR(200), PRIMARY KEY(username), FOREIGN KEY(username) references admins(username), FOREIGN KEY(plan) references plans(name), FOREIGN KEY(trainor) references trainors(username));
+CREATE TABLE members(username VARCHAR(200), plan VARCHAR(100), trainor VARCHAR(200), PRIMARY KEY(username), FOREIGN KEY(username) references info(username), FOREIGN KEY(plan) references plans(name), FOREIGN KEY(trainor) references trainors(username));
 
-ALTER TABLE admins ADD time TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+ALTER TABLE info ADD time TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
 
 CREATE TABLE progress(username VARCHAR(200), date DATE, daily_result VARCHAR(200), time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,rate int, PRIMARY KEY(username, date), FOREIGN KEY(username) references members(username));
 
 CREATE	 TABLE equip(name VARCHAR(20),count INT,PRIMARY KEY(name));
 
-INSERT INTO admins(username, password, street, city, phone, name, prof)
+INSERT INTO info(username, password, street, city, phone, name, prof)
     VALUES('admin', '1234', 'Adarshnagar', 'Anantapur', '9666585361', 'Parameswar Kurakula', 1);
 
 INSERT INTO plans(name, exercise, sets, reps)
