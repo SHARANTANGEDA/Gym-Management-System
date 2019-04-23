@@ -449,6 +449,7 @@ def deleteMember():
 	if request.method == 'POST':
 		username = form.username.data
 		cur = mysql.connection.cursor()
+		cur.execute("DELETE FROM progress WHERE username = %s",[username])
 		cur.execute("DELETE FROM members WHERE username = %s", [username])
 		cur.execute("DELETE FROM users WHERE username = %s", [username])
 		mysql.connection.commit()
@@ -601,7 +602,7 @@ def memberDash(username):
 	average = result.count(2)
 	total = good + poor + average
 	if total==0:
-		flash('The user has no progress yet', 'users')
+		flash('The user has no progress yet', 'danger')
 		return render_template('home.html')
 	good = round((good/total) * 100, 2)
 	average = round((average/total) * 100, 2)
